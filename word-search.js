@@ -15,41 +15,44 @@ class WordSearch {
 
         // Matt: const grid = ["rixilelhrs"]; is missing the brackets
 
+
+        function locateWord(grid, word, direction) {
+            for (let lineNum = 0; lineNum < grid.length; lineNum++) {
+
+                let string = word;
+                if (direction === "backward") {
+                    string = reverseString(word);
+                }
+
+                let line = grid[lineNum];
+
+                if (line.indexOf(string) > -1) {
+
+                    let startIndex = line.indexOf(string);
+
+                    if (direction === "forward") {
+                        returnVal[word] = {
+                            "start": [lineNum + 1, startIndex + 1],
+                            "end": [lineNum + 1, startIndex + string.length]
+                        }
+                    } else {
+                        returnVal[word] = {
+                            "end": [lineNum + 1, startIndex + 1],
+                            "start": [lineNum + 1, startIndex + string.length]
+                        };
+                    }
+                }
+            }
+        }
+
         let returnVal = {};
 
         for (let i = 0; i < word.length; i++) {
 
             let stringWord = word[i];
 
-            for (let lineNum = 0; lineNum < this.grid.length; lineNum++) {
-
-                let line = this.grid[lineNum];
-                if (line.indexOf(stringWord) > -1) {
-
-                    let startIndex = line.indexOf(stringWord);
-
-                    returnVal[stringWord] = {
-                        "start": [lineNum + 1, startIndex + 1],
-                        "end": [lineNum + 1, startIndex + stringWord.length]
-                    };
-                }
-            }
-
-            let backWord = reverseString(word[i]);
-
-            for (let lineNum = 0; lineNum < this.grid.length; lineNum++) {
-
-                let line = this.grid[lineNum];
-                if (line.indexOf(backWord) > -1) {
-
-                    let startIndex = line.indexOf(backWord);
-
-                    returnVal[stringWord] = {
-                        "end": [lineNum + 1, startIndex + 1],
-                        "start": [lineNum + 1, startIndex + stringWord.length]
-                    };
-                }
-            }
+            locateWord(this.grid, stringWord, "forward");
+            locateWord(this.grid, stringWord, "backward");
         }
 
         let grid90 = [];
