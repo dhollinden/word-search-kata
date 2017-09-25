@@ -51,62 +51,55 @@ class WordSearch {
                 }
             }
         }
+
+        let grid90 = [];
+        let newRow = "";
+        for (let col = this.grid[0].length - 1; col >= 0; col--) {
+            newRow = "";
+            for (let row = 0; row < this.grid.length; row++) {
+                newRow = newRow + this.grid[row].charAt(col);
+            }
+            grid90.push(newRow);
+        }
+
+        for (let i = 0; i < word.length; i++) {
+
+            let stringWord = word[i];
+
+            for (let lineNum = 0; lineNum < grid90.length; lineNum++) {
+
+                let line = grid90[lineNum];
+                if (line.indexOf(stringWord) > -1) {
+
+                    let startIndex = line.indexOf(stringWord);
+
+                    returnVal[stringWord] = {
+                        "start": [startIndex + 1, grid90[0].length - (lineNum + 1) + 1],
+                        "end": [startIndex + stringWord.length, grid90[0].length - (lineNum + 1) + 1]
+                    };
+                }
+            }
+
+            let backWord = reverseString(word[i]);
+
+            for (let lineNum = 0; lineNum < grid90.length; lineNum++) {
+
+                let line = grid90[lineNum];
+                if (line.indexOf(backWord) > -1) {
+
+                    let startIndex = line.indexOf(backWord);
+
+                    returnVal[stringWord] = {
+                        "end": [startIndex + 1, grid90[0].length - (lineNum + 1) + 1],
+                        "start": [startIndex + stringWord.length, grid90[0].length - (lineNum + 1) + 1]
+                    };
+                }
+            }
+        }
+
+
         return returnVal;
     }
 }
-
-
-/*
-        this.grid.forEach(function(line, lineNum) {
-
-            var stringWord = word[0];
-            if (line.indexOf(stringWord) > -1) {
-
-                var startIndex = line.indexOf(stringWord);
-                var returnVal = {};
-
-                returnVal[stringWord] = {
-                    "start": [lineNum + 1, startIndex + 1],
-                    "end": [lineNum + 1, startIndex + stringWord.length]
-                };
-
-                console.log(returnVal);
-                return returnVal;
-            }
-        })
-*/
-
-/*
-        if (this.grid[0].indexOf(word[0]) > -1) {
-            console.log({
-                [word[0]]: {
-                    "start": [1, this.grid[0].indexOf(word[0]) + 1],
-                    "end": [1, this.grid[0].indexOf(word[0]) + word[0].length]
-                }
-            });
-            return {
-                [word[0]]: {
-                    "start": [1, this.grid[0].indexOf(word[0]) + 1],
-                    "end": [1, this.grid[0].indexOf(word[0]) + word[0].length]
-                }
-            };
-        } else if (this.grid[1] && this.grid[1].indexOf(word[0]) > -1) {
-            return {
-                [word[0]]: {
-                    "start": [2, this.grid[1].indexOf(word[0]) + 1],
-                    "end": [2, this.grid[1].indexOf(word[0]) + word[0].length]
-                }
-            };
-        } else if (this.grid[2] && this.grid[2].indexOf(word[0]) > -1) {
-            return {
-                [word[0]]: {
-                    "start": [3, this.grid[2].indexOf(word[0]) + 1],
-                    "end": [3, this.grid[2].indexOf(word[0]) + word[0].length]
-                }
-            };
-        } else {
-            return {'glasnost': undefined}
-        }
-*/
 
 export default WordSearch;
