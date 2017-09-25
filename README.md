@@ -1,4 +1,4 @@
-# Word Search Kata
+n# Word Search Kata
 ====================================
 
 (this description of the kata was copied from http://exercism.io)
