@@ -13,14 +13,11 @@ class WordSearch {
         }
 
         function locateWord(grid, word, direction) {
+
             for (let lineNum = 0; lineNum < grid.length; lineNum++) {
 
-                let string = word;
-                if (direction === "backward" || direction === "upward") {
-                    string = reverseString(word);
-                }
-
                 let line = grid[lineNum];
+                let string = (direction === "backward" || direction === "upward") ? reverseString(word):word;
 
                 if (line.indexOf(string) > -1) {
 
@@ -38,13 +35,13 @@ class WordSearch {
                         };
                     } else if (direction === "downward") {
                         returnVal[word] = {
-                            "start": [startIndex + 1, grid90[0].length - (lineNum + 1) + 1],
-                            "end": [startIndex + word.length, grid90[0].length - (lineNum + 1) + 1]
+                            "start": [startIndex + 1, grid90[0].length - lineNum],
+                            "end": [startIndex + word.length, grid90[0].length - lineNum]
                         }
                     } else {
                         returnVal[word] = {
-                            "end": [startIndex + 1, grid90[0].length - (lineNum + 1) + 1],
-                            "start": [startIndex + word.length, grid90[0].length - (lineNum + 1) + 1]
+                            "end": [startIndex + 1, grid90[0].length - lineNum],
+                            "start": [startIndex + word.length, grid90[0].length - lineNum]
                         };
                     }
                 }
@@ -53,13 +50,10 @@ class WordSearch {
 
         let returnVal = {};
         let grid90 = [];
-        let newRow = "";
 
         for (let col = this.grid[0].length - 1; col >= 0; col--) {
-            newRow = "";
-            for (let row = 0; row < this.grid.length; row++) {
-                newRow = newRow + this.grid[row].charAt(col);
-            }
+            let newRow = "";
+            for (let row = 0; row < this.grid.length; row++) { newRow = newRow + this.grid[row].charAt(col); }
             grid90.push(newRow);
         }
 
