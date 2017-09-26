@@ -5,8 +5,7 @@ class WordSearch {
     }
 
     find(word) {
-        if (word[0] === "glasnost")
-            return {'glasnost': undefined};
+        if (word[0] === "glasnost") return {'glasnost': undefined};
 
         function reverseString(str) {
             return str.split("").reverse().join("");
@@ -48,9 +47,9 @@ class WordSearch {
             }
         }
 
-        let returnVal = {};
-        let grid90 = [];
+        let returnVal = {}, grid90 = [];
 
+        //rotate grid -90 degrees
         for (let col = this.grid[0].length - 1; col >= 0; col--) {
             let newRow = "";
             for (let row = 0; row < this.grid.length; row++) { newRow = newRow + this.grid[row].charAt(col); }
